@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        /* .main-block{
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+            padding: 25px;
+        }
+        .left-part,form{
+            padding: 25px;
+        }
+        .left-part{
+            text-align: center;
+        }
+        form{
+            background-color: rgba(0, 0,0,0.1);
+        }
+        .title{
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .info{
+            display: flex;
+            flex-direction: column;
+        }
+        input,select{
+            padding: 5px;
+            margin-bottom: 30px;
+            background: transparent;
+            border:none;
+            border-bottom: 1px solid black;
+        }
+        button{
+            width: 100%;
+        } */
+    </style>
+</head>
+<body id="body">
+    <div class="main-block">
+        <div class="left-part">
+            <h1>Vous enregistrer au cours</h1>
+        </div>
+        <form id="form">
+            <div class="title">
+                <h2>Inscrivez-vous</h2>
+            </div>
+            <div class="info">
+                <input type="text" name="name" id="name" placeholder="Nom complet">
+                <input type="text" name="mail" id="mail" placeholder="Email">
+                <input type="text" name="tel" id="tel" placeholder="Numero de telephone">
+                <select id="select">
+                    <option value="" selected>Type de cours*</option>
+                </select>
+            </div>
+            <input type="button" value="Envoyer" id="valid">
+            <input type="button" value="Verifier" id="verifT">
+            <input type="button" value="vider" id="vider">
+        </form>
+    </div>
+    <script>
+
+        //Question 1
+
+
+        function verification(){
+            let name = document.getElementById('name').value;
+            let mail = document.getElementById('mail').value;
+            let tel = document.getElementById('tel').value;
+            let select = document.getElementById('select').value;
+
+            if(name=="" && mail=="" && tel=="" && select==""){
+                alert('tous les champs sont obligatoir');
+            }else{
+                VerifTel();
+            }
+        }
+
+        //Question 2
+        function VerifTel(){
+            let tel = document.getElementById('tel').value;
+            let pattern = /^\d{10}$/;
+            if(pattern.test(tel)){
+                alert('good number');
+            }else{
+                alert("not good")
+            }
+        }
+
+        //Question 3
+        let html = `    
+        <div class="main-block">
+        <div class="left-part">
+            <h1>Vous enregistrer au cours</h1>
+        </div>
+        <form id="form">
+            <div class="title">
+                <h2>Inscrivez-vous</h2>
+            </div>
+            <div class="info">
+                <input type="text" name="name" id="name" placeholder="Nom complet">
+                <input type="text" name="mail" id="mail" placeholder="Email">
+                <input type="text" name="tel" id="tel" placeholder="Numero de telephone">
+                <select id="select">
+                    <option value="" selected>Type de cours*</option>
+                </select>
+            </div>
+            <input type="button" value="Envoyer" id="valid">
+            <input type="button" value="Verifier" id="verifT">
+            <input type="button" value="vider" id="vider">
+        </form>
+    </div>`;
+    document.getElementById('body').innerHTML= html;
+
+    //Question 4
+    let style = document.createElement('style');
+    style.innerHTML = ` .main-block{
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+            padding: 25px;
+        }
+        .left-part,form{
+            padding: 25px;
+        }
+        .left-part{
+            text-align: center;
+        }
+        form{
+            background-color: rgba(0, 0,0,0.1);
+        }
+        .title{
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .info{
+            display: flex;
+            flex-direction: column;
+        }
+        input,select{
+            padding: 5px;
+            margin-bottom: 30px;
+            background: transparent;
+            border:none;
+            border-bottom: 1px solid black;
+        }
+        button{
+            width: 100%;
+        } `;
+        document.head.appendChild(style);
+
+        //Question 5
+        document.getElementById('vider').addEventListener('click',vider)
+        function vider(){
+            form.reset();
+
+        }
+
+        //Question 6
+        let xhr = new XMLHttpRequest;
+        xhr.onreadystatechange=function(){
+            if(xhr.readyState==4 && xhr.status==200){
+                let json = JSON.parse(xhr.responseText);
+                for(i=0;i<json.typ.length;i++){
+                    let option = document.createElement("option");
+                    option.setAttribute('value','json.typ[i].prix');
+                    option.innerText= json.typ[i].nom;
+                    document.getElementById('select').appendChild(option);
+                }
+            }
+        }
+        xhr.open('GET','package.json',true);
+        xhr.send();
+    document.getElementById('valid').addEventListener('click', verification);
+    </script>
+</body>
+</html>

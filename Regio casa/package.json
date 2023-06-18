@@ -1,0 +1,6 @@
+{
+    "typ":[
+        {"nom":"Football","prix":1000},
+        {"nom":"Tennis","prix":2000}
+        ]
+}
